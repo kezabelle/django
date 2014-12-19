@@ -49,3 +49,9 @@ class RedirectFallbackMiddleware(object):
 
         # No redirect was found. Return the response.
         return response
+
+    def __repr__(self):
+        return '<%(cls)s append_slash=%(slash)r>' % {
+            'cls': self.__class__.__name__,
+            'slash': settings.APPEND_SLASH,
+        }

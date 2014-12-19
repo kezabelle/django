@@ -57,6 +57,12 @@ class CsrfViewMiddlewareTest(TestCase):
     _csrf_id_cookie = b"<1>\xc2\xa1"
     _csrf_id = "1"
 
+    def test_repr(self):
+        csrf_mw = CsrfViewMiddleware()
+        expected = ("<CsrfViewMiddleware name='csrftoken', max_age=31449600, "
+                    "domain=None, path='/', secure=False, httponly=False>")
+        self.assertEqual(expected, repr(csrf_mw))
+
     def _get_GET_no_csrf_cookie_request(self):
         return TestingHttpRequest()
 

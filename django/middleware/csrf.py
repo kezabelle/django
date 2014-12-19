@@ -83,6 +83,20 @@ class CsrfViewMiddleware(object):
     This middleware should be used in conjunction with the csrf_token template
     tag.
     """
+
+    def __repr__(self):
+        return ('<%(cls)s name=%(name)r, max_age=%(max_age)d, '
+                'domain=%(domain)r, path=%(path)r, secure=%(secure)r, '
+                'httponly=%(httponly)r>' % {
+                    'cls': self.__class__.__name__,
+                    'name': settings.CSRF_COOKIE_NAME,
+                    'max_age': settings.CSRF_COOKIE_AGE,
+                    'domain': settings.CSRF_COOKIE_DOMAIN,
+                    'path': settings.CSRF_COOKIE_PATH,
+                    'secure': settings.CSRF_COOKIE_SECURE,
+                    'httponly': settings.CSRF_COOKIE_HTTPONLY
+                })
+
     # The _accept and _reject methods currently only exist for the sake of the
     # requires_csrf_token decorator.
     def _accept(self, request):

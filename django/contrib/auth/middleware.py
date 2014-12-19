@@ -118,3 +118,11 @@ class RemoteUserMiddleware(object):
         else:
             if isinstance(stored_backend, RemoteUserBackend):
                 auth.logout(request)
+
+    def __repr__(self):
+        return ('<%(cls)s header=%(header)r, '
+                'backend_session_key=%(backend_session_key)r>' % {
+                    'cls': self.__class__.__name__,
+                    'header': self.header,
+                    'backend_session_key': auth.BACKEND_SESSION_KEY,
+                })
