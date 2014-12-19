@@ -36,6 +36,15 @@ class SimpleTemplateResponse(HttpResponse):
         # True, so we initialize it to False after the call to super __init__.
         self._is_rendered = False
 
+    def __repr__(self):
+        return ('<%(cls)s status_code=%(status_code)d, charset=%(charset)r, '
+                '_is_rendered=%(is_rendered)r>' % {
+                    'cls': self.__class__.__name__,
+                    'is_rendered': self._is_rendered,
+                    'status_code': self.status_code,
+                    'charset': self.charset,
+                })
+
     def __getstate__(self):
         """Pickling support function.
 

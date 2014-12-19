@@ -49,6 +49,11 @@ class HttpResponseBaseTests(SimpleTestCase):
 
 
 class HttpResponseTests(SimpleTestCase):
+    def test_repr(self):
+        resp = HttpResponse(status=201)
+        expected = "<HttpResponse status_code=201, charset='utf-8'>"
+        self.assertEqual(expected, repr(resp))
+
     def test_status_code(self):
         resp = HttpResponse(status=418)
         self.assertEqual(resp.status_code, 418)

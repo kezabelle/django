@@ -157,6 +157,13 @@ class HttpResponseBase(six.Iterator):
     else:
         __str__ = serialize_headers
 
+    def __repr__(self):
+        return '<%(cls)s status_code=%(status_code)d, charset=%(charset)r>' % {
+            'cls': self.__class__.__name__,
+            'status_code': self.status_code,
+            'charset': self.charset,
+        }
+
     def _convert_to_charset(self, value, charset, mime_encode=False):
         """Converts headers key/value to ascii/latin-1 native strings.
 
@@ -462,6 +469,13 @@ class HttpResponseRedirectBase(HttpResponse):
 
     url = property(lambda self: self['Location'])
 
+    def __repr__(self):
+        return '<%(cls)s url=%(url)r, allowed_schemes=%(schemes)r>' % {
+            'cls': self.__class__.__name__,
+            'url': self.url,
+            'schemes': self.allowed_schemes,
+        }
+
 
 class HttpResponseRedirect(HttpResponseRedirectBase):
     status_code = 302
@@ -503,6 +517,15 @@ class HttpResponseNotAllowed(HttpResponse):
     def __init__(self, permitted_methods, *args, **kwargs):
         super(HttpResponseNotAllowed, self).__init__(*args, **kwargs)
         self['Allow'] = ', '.join(permitted_methods)
+
+    def __repr__(self):
+        return ('<%(cls)s status_code=%(status_code)d, charset=%(charset)r, '
+                'allows=%(permitted_methods)r>' % {
+                    'cls': self.__class__.__name__,
+                    'status_code': self.status_code,
+                    'charset': self.charset,
+                    'permitted_methods': self['Allow'],
+                })
 
 
 class HttpResponseGone(HttpResponse):

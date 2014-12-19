@@ -31,6 +31,12 @@ class SimpleTemplateResponseTest(SimpleTestCase):
     def _response(self, template='foo', *args, **kwargs):
         return SimpleTemplateResponse(Template(template), *args, **kwargs)
 
+    def test_repr(self):
+        response = SimpleTemplateResponse('first/test.html')
+        expected = ("<SimpleTemplateResponse status_code=200, "
+                    "charset='utf-8', _is_rendered=False>")
+        self.assertEqual(expected, repr(response))
+
     def test_template_resolving(self):
         response = SimpleTemplateResponse('first/test.html')
         response.render()
