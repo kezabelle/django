@@ -61,6 +61,12 @@ class AdminSite(object):
         self._actions = {'delete_selected': actions.delete_selected}
         self._global_actions = self._actions.copy()
 
+    def __repr__(self):
+        return '<%(cls)s name=%(name)r>' % {
+            'cls': self.__class__.__name__,
+            'name': self.name,
+        }
+
     def register(self, model_or_iterable, admin_class=None, **options):
         """
         Registers the given model(s) with the given admin class.

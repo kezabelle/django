@@ -83,6 +83,20 @@ class ChangeList(object):
         self.title = title % force_text(self.opts.verbose_name)
         self.pk_attname = self.lookup_opts.pk.attname
 
+    def __repr__(self):
+        return ('<%(cls)s list_display=%(list_display)r, '
+                'list_filter=%(list_filter)r, '
+                'search_fields=%(search_fields)r, '
+                'list_per_page=%(list_per_page)d, '
+                'page_num=%(page_num)d>' % {
+                    'cls': self.__class__.__name__,
+                    'list_display': self.list_display,
+                    'list_filter': self.list_filter,
+                    'search_fields': self.search_fields,
+                    'list_per_page': self.list_per_page,
+                    'page_num': self.page_num,
+                })
+
     def get_filters_params(self, params=None):
         """
         Returns all params except IGNORED_PARAMS

@@ -40,6 +40,18 @@ class ChangeListTests(TestCase):
         request.user = user
         return request
 
+    def test_repr(self):
+        m = ChildAdmin(Child, admin.site)
+        request = self.factory.get('/child/')
+        cl = ChangeList(request, Child, m.list_display, m.list_display_links,
+                        m.list_filter, m.date_hierarchy, m.search_fields,
+                        m.list_select_related, m.list_per_page,
+                        m.list_max_show_all, m.list_editable, m)
+        expected = ("<ChangeList list_display=['name', 'parent'], "
+                    "list_filter=['parent', 'age'], search_fields=(), "
+                    "list_per_page=10, page_num=0>")
+        self.assertEqual(expected, repr(cl))
+
     def test_select_related_preserved(self):
         """
         Regression test for #10348: ChangeList.get_queryset() shouldn't

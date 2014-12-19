@@ -584,6 +584,13 @@ class ModelAdmin(BaseModelAdmin):
         self.admin_site = admin_site
         super(ModelAdmin, self).__init__()
 
+    def __repr__(self):
+        return '<%(cls)s model=%(model)r, admin_site=%(admin_site)r>' % {
+            'cls': self.__class__.__name__,
+            'model': self.model,
+            'admin_site': self.admin_site,
+        }
+
     def __str__(self):
         return "%s.%s" % (self.model._meta.app_label, self.__class__.__name__)
 

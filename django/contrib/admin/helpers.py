@@ -43,6 +43,17 @@ class AdminForm(object):
             readonly_fields = ()
         self.readonly_fields = readonly_fields
 
+    def __repr__(self):
+        return ('<%(cls)s form=%(form)r, fieldsets=%(fieldsets)r, '
+                'prepopulated_fields=%(fieldsets)r, '
+                'readonly_fields=%(readonly_fields)r>' % {
+                    'cls': self.__class__.__name__,
+                    'form': self.form,
+                    'fieldsets': self.fieldsets,
+                    'prepopulated_fields': self.prepopulated_fields,
+                    'readonly_fields': self.readonly_fields,
+                })
+
     def __iter__(self):
         for name, options in self.fieldsets:
             yield Fieldset(
@@ -225,6 +236,19 @@ class InlineAdminFormSet(object):
         if prepopulated_fields is None:
             prepopulated_fields = {}
         self.prepopulated_fields = prepopulated_fields
+
+    def __repr__(self):
+        return ('<%(cls)s opts=%(inline)s, formset=%(formset)s, '
+                'fieldsets=%(fieldsets)r>, '
+                'readonly_fields=%(readonly_fields)r, '
+                'prepopulated_fields=%(prepopulated_fields)r>' % {
+                    'cls': self.__class__.__name__,
+                    'inline': self.opts.__class__.__name__,
+                    'formset': self.formset.__class__.__name__,
+                    'fieldsets': self.fieldsets,
+                    'readonly_fields': self.readonly_fields,
+                    'prepopulated_fields': self.prepopulated_fields,
+                })
 
     def __iter__(self):
         for form, original in zip(self.formset.initial_forms, self.formset.get_queryset()):

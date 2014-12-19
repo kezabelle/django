@@ -14,7 +14,7 @@ from django.core.urlresolvers import (NoReverseMatch,
     get_script_prefix, reverse, set_script_prefix)
 # Register auth models with the admin.
 from django.contrib.auth import get_permission_codename
-from django.contrib.admin import ModelAdmin
+from django.contrib.admin import ModelAdmin, AdminSite
 from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
 from django.contrib.admin.models import LogEntry, DELETION
 from django.contrib.admin.options import TO_FIELD_VAR
@@ -92,6 +92,11 @@ class AdminViewBasicTestCase(TestCase):
 
 
 class AdminViewBasicTest(AdminViewBasicTestCase):
+    def test_repr(self):
+        adminsite = AdminSite()
+        expected = "<AdminSite name='admin'>"
+        self.assertEqual(expected, repr(adminsite))
+
     def test_trailing_slash_required(self):
         """
         If you leave off the trailing slash, app should redirect and add it.
@@ -985,6 +990,11 @@ class SaveAsTests(TestCase):
 @override_settings(ROOT_URLCONF="admin_views.urls")
 class CustomModelAdminTest(AdminViewBasicTestCase):
     urlbit = "admin2"
+
+    def test_repr(self):
+        adminsite = AdminSite(name='custom_admin')
+        expected = "<AdminSite name='custom_admin'>"
+        self.assertEqual(expected, repr(adminsite))
 
     def test_custom_admin_site_login_form(self):
         self.client.logout()

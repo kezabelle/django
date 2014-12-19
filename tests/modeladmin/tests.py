@@ -8,6 +8,7 @@ from django.contrib.admin.options import (ModelAdmin, TabularInline,
 from django.contrib.admin.sites import AdminSite
 from django.contrib.admin.widgets import AdminDateWidget, AdminRadioSelect
 from django.contrib.admin.validation import ModelAdminValidator
+from django.contrib.admin.helpers import AdminForm
 from django.contrib.admin import (SimpleListFilter,
      BooleanFieldListFilter)
 from django.core.checks import Error
@@ -42,6 +43,29 @@ class ModelAdminTests(TestCase):
             sign_date=date(1965, 1, 1),
         )
         self.site = AdminSite()
+
+    def test_repr(self):
+        ma = ModelAdmin(Band, self.site)
+        expected = ("<ModelAdmin model=<class 'modeladmin.models.Band'>, "
+                    "admin_site=<AdminSite name='admin'>>")
+        self.assertEqual(expected, repr(ma))
+
+    def test_adminform_repr(self):
+        ma = ModelAdmin(Band, self.site)
+        ModelForm = ma.get_form(request)
+        form = ModelForm()
+        admin_form = AdminForm(
+            form,
+            list(ma.get_fieldsets(request)),
+            ma.get_prepopulated_fields(request),
+            ma.get_readonly_fields(request),
+            model_admin=ma)
+        expected = ("<AdminForm form=<BandForm bound=False, valid=Unknown, "
+                    "fields=(name;bio;sign_date)>, "
+                    "fieldsets=[(None, {'fields': ['name', 'bio', 'sign_date']})], "  # noqa
+                    "prepopulated_fields=[(None, {'fields': ['name', 'bio', 'sign_date']})], "  # noqa
+                    "readonly_fields=()>")
+        self.assertEqual(expected, repr(admin_form))
 
     # form/fields/fieldsets interaction ##############################
 

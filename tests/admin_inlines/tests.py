@@ -36,6 +36,15 @@ class TestInline(TestCase):
         self.assertEqual(result, True)
         self.factory = RequestFactory()
 
+    def test_inlineadminformset_repr(self):
+        response = self.client.get(self.change_url)
+        inner_formset = response.context['inline_admin_formsets'][0]
+        import pdb; pdb.set_trace()
+        expected = ("<InlineAdminFormSet opts=InnerInline, formset=InnerFormFormSet, "  # noqa
+                    "fieldsets=[(None, {'fields': ['dummy', 'holder', 'readonly']})]>, "  # noqa
+                    "readonly_fields=['readonly'], prepopulated_fields={}>")
+        self.assertEqual(expected, repr(inner_formset))
+
     def test_can_delete(self):
         """
         can_delete should be passed to inlineformset factory.
