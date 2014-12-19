@@ -18,6 +18,12 @@ class SessionStorage(BaseStorage):
             "MIDDLEWARE_CLASSES list."
         super(SessionStorage, self).__init__(request, *args, **kwargs)
 
+    def __repr__(self):
+        return '<%(cls)s session_key="%(session)s">' % {
+            'cls': self.__class__.__name__,
+            'session': self.session_key,
+        }
+
     def _get(self, *args, **kwargs):
         """
         Retrieves a list of messages from the request's session.  This storage

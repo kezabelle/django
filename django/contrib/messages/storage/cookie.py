@@ -61,6 +61,12 @@ class CookieStorage(BaseStorage):
     max_cookie_size = 2048
     not_finished = '__messagesnotfinished__'
 
+    def __repr__(self):
+        return '<%(cls)s cookie_name="%(cookie)s">' % {
+            'cls': self.__class__.__name__,
+            'cookie': self.cookie_name,
+        }
+
     def _get(self, *args, **kwargs):
         """
         Retrieves a list of messages from the messages cookie.  If the
