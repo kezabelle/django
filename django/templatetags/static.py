@@ -98,6 +98,13 @@ class StaticNode(Node):
         self.path = path
         self.varname = varname
 
+    def __repr__(self):
+        return '<%(cls)s path=%(path)r, varname=%(varname)r>' % {
+            'cls': self.__class__.__name__,
+            'path': self.path,
+            'varname': self.varname
+        }
+
     def url(self, context):
         path = self.path.resolve(context)
         return self.handle_simple(path)

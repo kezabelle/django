@@ -107,6 +107,18 @@ class BlockTranslateNode(Node):
         self.message_context = message_context
         self.trimmed = trimmed
 
+    def __repr__(self):
+        return ('<%(cls)s singular=%(singular)r, plural=%(plural)r, '
+                'countervar=%(countervar)r, counter=%(counter)r, '
+                'trimmed=%(trimmed)r>' % {
+                    'cls': self.__class__.__name__,
+                    'singular': self.singular,
+                    'plural': self.plural,
+                    'countervar': self.countervar,
+                    'counter': self.counter,
+                    'trimmed': self.trimmed,
+                })
+
     def render_token_list(self, tokens):
         result = []
         vars = []

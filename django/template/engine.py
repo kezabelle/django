@@ -50,6 +50,15 @@ class Engine(object):
         self.string_if_invalid = string_if_invalid
         self.file_charset = file_charset
 
+    def __repr__(self):
+        return ('<%(cls)s loaders=%(loaders)r, '
+                'file_charset=%(file_charset)s, debug=%(debug)r>' % {
+                    'cls': self.__class__.__name__,
+                    'loaders': self.loaders,
+                    'file_charset': self.file_charset,
+                    'debug': self.debug,
+                })
+
     @staticmethod
     @lru_cache.lru_cache()
     def get_default():

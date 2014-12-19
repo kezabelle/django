@@ -14,6 +14,14 @@ class LoaderOrigin(Origin):
         super(LoaderOrigin, self).__init__(display_name)
         self.loader, self.loadname, self.dirs = loader, name, dirs
 
+    def __repr__(self):
+        return ('<%(cls)s name=%(name)s, '
+                'loadname=%(loadname)s>' % {
+                    'cls': self.__class__.__name__,
+                    'name': self.name,
+                    'loadname': self.loadname,
+                })
+
     def reload(self):
         return self.loader(self.loadname, self.dirs)[0]
 

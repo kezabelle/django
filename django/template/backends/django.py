@@ -21,6 +21,11 @@ class DjangoTemplates(BaseEngine):
         super(DjangoTemplates, self).__init__(params)
         self.engine = Engine(self.dirs, self.app_dirs, **options)
 
+    def __repr__(self):
+        return '<%(cls)s engine=%(engine)r>' % {
+            'cls': self.__class__.__name__, 'engine': self.engine
+        }
+
     def from_string(self, template_code):
         return Template(self.engine.from_string(template_code))
 
@@ -32,6 +37,15 @@ class Template(object):
 
     def __init__(self, template):
         self.template = template
+
+    def __repr__(self):
+        return ('<Django%(cls)s loaders=%(engine)r, name=%(name)s, '
+                'origin=%(origin)r>' % {
+                    'cls': self.__class__.__name__,
+                    'engine': self.template.engine.loaders,
+                    'name': self.template.name,
+                    'origin': self.origin,
+                })
 
     @property
     def origin(self):

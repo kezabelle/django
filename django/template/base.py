@@ -159,6 +159,12 @@ class Origin(object):
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return '<%(cls)s name=%(name)s>' % {
+            'cls': self.__class__.__name__,
+            'name': self.name,
+        }
+
 
 class StringOrigin(Origin):
     def __init__(self, source):
@@ -189,6 +195,15 @@ class Template(object):
         self.name = name
         self.origin = origin
         self.engine = engine
+
+    def __repr__(self):
+        return ('<%(cls)s engine=%(engine)r, name=%(name)s, '
+                'origin=%(origin)r>' % {
+                    'cls': self.__class__.__name__,
+                    'engine': self.engine,
+                    'name': self.name,
+                    'origin': self.origin,
+                })
 
     def __iter__(self):
         for node in self.nodelist:
@@ -222,6 +237,14 @@ class Token(object):
         self.token_type, self.contents = token_type, contents
         self.lineno = None
 
+    def __repr__(self):
+        token_name = TOKEN_MAPPING[self.token_type]
+        return '<%(cls)s %(name)s line=%(lineno)r>' % {
+            'cls': self.__class__.__name__,
+            'name': token_name,
+            'lineno': self.lineno,
+        }
+
     def __str__(self):
         token_name = TOKEN_MAPPING[self.token_type]
         return ('<%s token: "%s...">' %
@@ -249,6 +272,15 @@ class Lexer(object):
         self.origin = origin
         self.lineno = 1
         self.verbatim = False
+
+    def __repr__(self):
+        return ('<%(cls)s lineno=%(lineno)r, '
+                'verbatim=%(verbatim)r, origin=%(origin)r>' % {
+                    'cls': self.__class__.__name__,
+                    'origin': self.origin,
+                    'lineno': self.lineno,
+                    'verbatim': self.verbatim,
+                })
 
     def tokenize(self):
         """
@@ -302,6 +334,13 @@ class Parser(object):
         self.filters = {}
         for lib in builtins:
             self.add_library(lib)
+
+    def __repr__(self):
+        return '<%(cls)s tags=%(tags)r, filters=%(filters)r>' % {
+            'cls': self.__class__.__name__,
+            'tags': tuple(self.tags.keys()),
+            'filters': tuple(self.filters.keys()),
+        }
 
     def parse(self, parse_until=None):
         if parse_until is None:
@@ -642,6 +681,13 @@ class FilterExpression(object):
 
         self.filters = filters
         self.var = var_obj
+
+    def __repr__(self):
+        return '<%(cls)s var=%(var)r, filters=%(filters)r>' % {
+            'cls': self.__class__.__name__,
+            'var': self.var,
+            'filters': self.filters,
+        }
 
     def resolve(self, context, ignore_failures=False):
         if isinstance(self.var, Variable):
