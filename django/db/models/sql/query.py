@@ -2091,6 +2091,19 @@ class JoinPromoter(object):
         self.outer_votes = {}
         self.inner_votes = {}
 
+    def __repr__(self):
+        return ('<%(cls)s connector=%(connector)s, '
+                'effective_connector=%(effective)s, '
+                'num_children=%(count)d, inner_votes=%(inner)r, '
+                'outer_votes=%(outer)r>' % {
+                    'cls': self.__class__.__name__,
+                    'connector': self.connector,
+                    'effective': self.effective_connector,
+                    'count': self.num_children,
+                    'inner': self.inner_votes,
+                    'outer': self.outer_votes,
+                })
+
     def add_votes(self, inner_votes):
         """
         Add single vote per item to self.inner_votes. Parameter can be any

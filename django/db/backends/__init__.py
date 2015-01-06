@@ -91,6 +91,19 @@ class BaseDatabaseWrapper(object):
         self.allow_thread_sharing = allow_thread_sharing
         self._thread_ident = thread.get_ident()
 
+    def __repr__(self):
+        return ('<%(cls)s vendor=%(vendor)r, alias=%(alias)r, '
+                'autocommit=%(autocommit)r, '
+                'in_atomic_block=%(in_atomic_block)r, '
+                'queries_logged=%(queries_logged)r>' % {
+                    'cls': self.__class__.__name__,
+                    'vendor': self.vendor,
+                    'alias': self.alias,
+                    'autocommit': self.autocommit,
+                    'in_atomic_block': self.in_atomic_block,
+                    'queries_logged': self.queries_logged,
+                })
+
     @property
     def queries_logged(self):
         return self.force_debug_cursor or settings.DEBUG

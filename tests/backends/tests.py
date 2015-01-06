@@ -45,6 +45,15 @@ class DummyBackendTest(TestCase):
         with self.assertRaises(ImproperlyConfigured):
             conns[DEFAULT_DB_ALIAS].ensure_connection()
 
+    def test_databasewrapper_repr_using_dummy(self):
+        conns = ConnectionHandler({})
+        database_wrapper = conns[DEFAULT_DB_ALIAS]
+        expected = ("<DatabaseWrapper vendor='unknown', alias='default', "
+                    "autocommit=False, in_atomic_block=False, "
+                    "queries_logged=False>")
+        self.assertEqual(expected, repr(database_wrapper))
+
+
 
 @unittest.skipUnless(connection.vendor == 'oracle', "Test only for Oracle")
 class OracleTests(unittest.TestCase):
@@ -108,6 +117,13 @@ class OracleTests(unittest.TestCase):
 class SQLiteTests(TestCase):
 
     longMessage = True
+
+    def test_databasewrapper_repr(self):
+        expected = ("<DatabaseWrapper vendor='sqlite', alias='default', "
+                    "autocommit=False, in_atomic_block=True, "
+                    "queries_logged=False>")
+        database_wrapper = connections[DEFAULT_DB_ALIAS]
+        self.assertEqual(expected, repr(database_wrapper))
 
     def test_autoincrement(self):
         """

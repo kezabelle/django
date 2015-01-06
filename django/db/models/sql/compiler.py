@@ -35,6 +35,13 @@ class SQLCompiler(object):
         self.select, self.klass_info, self.annotation_col_map = self.get_select()
         self.col_count = len(self.select)
 
+    def __repr__(self):
+        return '<%(cls)s using=%(using)r, connection=%(connection)r>' % {
+            'cls': self.__class__.__name__,
+            'using': self.using,
+            'connection': self.connection,
+        }
+
     def pre_sql_setup(self):
         """
         Does any necessary class setup immediately prior to producing SQL. This

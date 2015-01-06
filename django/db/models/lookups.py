@@ -107,6 +107,13 @@ class Lookup(RegisterLookupMixin):
                 raise NotImplementedError("Bilateral transformations on nested querysets are not supported.")
         self.bilateral_transforms = bilateral_transforms
 
+    def __repr__(self):
+        return '<%(cls)s lhs=%(left)r, rhs=%(right)r>' % {
+            'cls': self.__class__.__name__,
+            'left': self.lhs,
+            'right': self.rhs,
+        }
+
     def apply_bilateral_transforms(self, value):
         for transform, lookups in self.bilateral_transforms:
             value = transform(value, lookups)

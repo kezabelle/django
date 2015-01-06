@@ -542,6 +542,13 @@ class Col(ExpressionNode):
         super(Col, self).__init__(output_field=source)
         self.alias, self.target = alias, target
 
+    def __repr__(self):
+        return '<%(cls)s alias=%(alias)r, target=%(target)r>' % {
+            'cls': self.__class__.__name__,
+            'alias': self.alias,
+            'target': self.target,
+        }
+
     def as_sql(self, compiler, connection):
         qn = compiler.quote_name_unless_alias
         return "%s.%s" % (qn(self.alias), qn(self.target.column)), []

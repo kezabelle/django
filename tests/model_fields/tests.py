@@ -30,6 +30,14 @@ from .models import (
 
 
 class BasicFieldTests(test.TestCase):
+    def test_col_repr(self):
+        model_instance = Whiz()
+        model_field = model_instance._meta.get_field('c')
+        col = model_field.cached_col
+        expected = ("<Col alias='model_fields_whiz', "
+                    "target=<django.db.models.fields.IntegerField: c>>")
+        self.assertEqual(expected, repr(col))
+
     def test_show_hidden_initial(self):
         """
         Regression test for #12913. Make sure fields with choices respect
@@ -42,6 +50,8 @@ class BasicFieldTests(test.TestCase):
 
         form_field = model_field.formfield(show_hidden_initial=False)
         self.assertFalse(form_field.show_hidden_initial)
+
+
 
     def test_nullbooleanfield_blank(self):
         """
