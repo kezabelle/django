@@ -47,6 +47,7 @@ class SettingsReference(str):
 
 
 class OperationWriter(object):
+    __slots__ = ('operation', 'buff', 'indentation')
     def __init__(self, operation, indentation=2):
         self.operation = operation
         self.buff = []
@@ -151,7 +152,7 @@ class MigrationWriter(object):
     Takes a Migration instance and is able to produce the contents
     of the migration file from it.
     """
-
+    __slots__ = ('migration', 'needs_manual_porting')
     def __init__(self, migration):
         self.migration = migration
         self.needs_manual_porting = False

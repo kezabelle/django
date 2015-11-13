@@ -22,6 +22,8 @@ class MigrationRecorder(object):
     a row in the table always means a migration is applied.
     """
 
+    __slots__ = ('connection',)
+
     @python_2_unicode_compatible
     class Migration(models.Model):
         app = models.CharField(max_length=255)

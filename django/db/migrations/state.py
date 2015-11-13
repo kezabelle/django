@@ -355,10 +355,12 @@ class ModelState(object):
     to mutate the Field instances inside there themselves - you must instead
     assign new ones, as these are not detached during a clone.
     """
+    __slots__ = ('app_label', 'name', 'name_lower', 'fields', 'options', 'bases', 'managers')
 
     def __init__(self, app_label, name, fields, options=None, bases=None, managers=None):
         self.app_label = app_label
         self.name = force_text(name)
+        self.name_lower = self.name.lower()
         self.fields = fields
         self.options = options or {}
         self.bases = bases or (models.Model, )
@@ -383,10 +385,6 @@ class ModelState(object):
                     'ModelState.fields cannot refer to a model class - "%s.through" does. '
                     'Use a string reference instead.' % name
                 )
-
-    @cached_property
-    def name_lower(self):
-        return self.name.lower()
 
     @classmethod
     def from_model(cls, model, exclude_rels=False):

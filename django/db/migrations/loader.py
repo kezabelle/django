@@ -39,6 +39,7 @@ class MigrationLoader(object):
     to disk, but this is probably fine. We're already not just operating
     in memory.
     """
+    __slots__ = ('connection', 'disk_migrations', 'applied_migrations', 'ignore_no_migrations', 'unmigrated_apps', 'migrated_apps', 'replacements', 'graph')
 
     def __init__(self, connection, load=True, ignore_no_migrations=False):
         self.connection = connection

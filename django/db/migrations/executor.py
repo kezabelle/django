@@ -14,6 +14,7 @@ class MigrationExecutor(object):
     End-to-end migration execution - loads migrations, and runs them
     up or down to a specified set of targets.
     """
+    __slots__ = ('connection', 'loader', 'recorder', 'progress_callback')
 
     def __init__(self, connection, progress_callback=None):
         self.connection = connection

@@ -29,6 +29,7 @@ class MigrationAutodetector(object):
     depends on first). A user interface may offer single-app usage
     if it wishes, with the caveat that it may not always be possible.
     """
+    __slots__ = ('from_state', 'to_state', 'questioner', 'existing_apps', 'generated_operations', 'old_apps', 'new_apps', 'old_model_keys', 'old_proxy_keys', 'old_unmanaged_keys', 'new_model_keys', 'new_proxy_keys', 'new_unmanaged_keys', 'kept_model_keys', 'kept_proxy_keys', 'kept_unmanaged_keys', 'through_users', 'old_field_keys', 'new_field_keys', 'migrations', 'renamed_models', 'renamed_models_rel', 'renamed_fields')
 
     def __init__(self, from_state, to_state, questioner=None):
         self.from_state = from_state

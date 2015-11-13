@@ -1,3 +1,6 @@
+import itertools
+
+
 def topological_sort_as_sets(dependency_graph):
     """Variation of Kahn's algorithm (1962) that returns sets.
 
@@ -24,8 +27,8 @@ def topological_sort_as_sets(dependency_graph):
 
 def stable_topological_sort(l, dependency_graph):
     result = []
-    for layer in topological_sort_as_sets(dependency_graph):
-        for node in l:
+    layers_nodes = itertools.product(topological_sort_as_sets(dependency_graph), l)
+    for layer, node in layers_nodes:
             if node in layer:
                 result.append(node)
     return result

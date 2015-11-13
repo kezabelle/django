@@ -18,6 +18,7 @@ class MigrationQuestioner(object):
     This base class has a built-in noninteractive mode, but the
     interactive subclass is what the command-line arguments will use.
     """
+    __slots__ = ('defaults', 'specified_apps', 'dry_run')
 
     def __init__(self, defaults=None, specified_apps=None, dry_run=None):
         self.defaults = defaults or {}
@@ -75,6 +76,8 @@ class MigrationQuestioner(object):
 
 
 class InteractiveMigrationQuestioner(MigrationQuestioner):
+
+    __slots__ = ('defaults', 'specified_apps', 'dry_run')
 
     def _boolean_input(self, question, default=None):
         result = input("%s " % question)
@@ -183,6 +186,8 @@ class InteractiveMigrationQuestioner(MigrationQuestioner):
 
 
 class NonInteractiveMigrationQuestioner(MigrationQuestioner):
+
+    __slots__ = ('defaults', 'specified_apps', 'dry_run')
 
     def ask_not_null_addition(self, field_name, model_name):
         # We can't ask the user, so act like the user aborted.

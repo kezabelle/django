@@ -102,6 +102,7 @@ class MigrationGraph(object):
     things within an app - namely, root nodes and leaf nodes ignore dependencies
     to other apps.
     """
+    __slots__ = ('node_map', 'nodes', 'cached')
 
     def __init__(self):
         self.node_map = {}

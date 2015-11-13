@@ -18,7 +18,7 @@ class MigrationOptimizer(object):
     new CreateModel, and CreateModel and DeleteModel can be optimized into
     nothing.
     """
-
+    __slots__ = ('model_level_operations', 'field_level_operations', 'reduce_methods', '_iterations')
     def __init__(self):
         self.model_level_operations = (
             CreateModel,
